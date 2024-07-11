@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>UserEdit</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+</head>
+<body>
+	<div id="useredit" class="popup">
+        		<div class="popup-content">
+            		<span class="close-btn" id="closePopupBtn1">&times;</span>
+            		<h1>UserDetails Update</h1>
+            		<p>Enter Details for the Update</p>
+            		{% for i in userdetail %}
+            		<form method="POST" action="{% url 'edit' i.user_id %}">
+            			{% csrf_token %}
+            			
+            			<section>
+	            		<div>
+	            			<label for="firstname">First Name</label>
+							<input type="text" name="firstName" placeholder="First-Name" value="{{i.firstname}}"  id="firstname" />
+						</div>
+						<div>	
+							<label for="lastname">Last Name</label>
+							<input type="text" name="lastName" placeholder="Last-Name" value="{{i.lastname}}" id="lastname" />
+						</div>
+						</section>
+						<section>
+						<div>
+							<label for="email">Email</label>
+							<input type="email" name="email" placeholder="Your mail" value="{{i.email}}" id="email" />
+						</div>
+						<div>	
+							<label for="age">Age</label>
+							<input type="number" name="age" placeholder="Your Number" value="{{i.age}}" min="1" id="age" />
+						</div>
+						</section>
+						<div>
+							<label for="gender">Gender</label>
+							<select name="gender" id="gender">
+								<option value="{{i.gender}}">{{i.gender}}</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+						{% endfor %}
+						<button type="submit" class="sub-btn" id="submit">Submit</button>	
+
+					</form>
+					
+       			</div>
+    		</div>
+    
+
+</body>
+</html>

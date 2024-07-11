@@ -1,0 +1,118 @@
+{% load static %}
+<!Doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>User Management</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+</head>
+<body>
+	<div>
+		<header>
+			<h1>Welcome to User Management System</h1>
+			<nav>
+				<form method="POST" action="{% url 'search' %}">
+					{% csrf_token %}
+					<input type="search" name="search" placeholder="search user" />
+					<button type="submit">search</button>
+				</form>
+				<button id="openPopupBtn">Add User</button>
+			</nav>
+		</header>
+		<main>
+			<h1>User Details</h1>
+			<p>View and Manage User Information</p>
+			<section class="table-container">
+				<table class="styled-table">
+					<thead>
+					<tr>
+						<th>Id</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>
+						<th>Age</th>
+						<th>Gender</th>
+						<th>Action</th>
+						<th>Action</th>
+					</tr>
+					</thead>
+					{% for i in users %}
+					<tbody>
+					<tr class="active-row">
+						<td>{{i.user_id}}</td>
+						<td>{{i.firstname}}</td>
+						<td>{{i.lastname}}</td>
+						<td>{{i.email}}</td>
+						<td>{{i.age}}</td>
+						<td>{{i.gender}}</td>
+						<td><button><a href="{% url 'edit' i.user_id %}"> Edit</a></button></td>
+						<td><button><a href="{% url 'delete' i.user_id %}">Delete</a></button></td>
+					</tr>
+					</tbody>
+					{% endfor %}
+				</table>
+
+			</section>
+
+			{% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <h1>{{message}}</h1>
+                {% endfor %}        
+            </div>
+            {% endif %}
+
+
+
+			<div id="userreg" class="popup hidden">
+        		<div class="popup-content">
+            		<span class="close-btn" id="closePopupBtn">&times;</span>
+            		<h1>Add New User</h1>
+            		<p>Enter Details for the New User</p>
+            		<form method="POST" action="{% url 'reg' %}">
+            			{% csrf_token %}
+            			<section>
+	            		<div>
+	            			<label for="firstname">First Name</label>
+							<input type="text" name="firstName" placeholder="First-Name" id="firstname" />
+						</div>
+						<div>	
+							<label for="lastname">Last Name</label>
+							<input type="text" name="lastName" placeholder="Last-Name" id="lastname" />
+						</div>
+						</section>
+						<section>
+						<div>
+							<label for="email">Email</label>
+							<input type="email" name="email" placeholder="Your mail" id="email" />
+						</div>
+						<div>	
+							<label for="age">Age</label>
+							<input type="number" name="age" placeholder="Your Number" min="1" id="age" />
+						</div>
+						</section>
+						<div>
+							<label for="gender">Gender</label>
+							<select name="gender" id="gender">
+								Select Gender
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+						<button type="submit" class="sub-btn" id="submit">Submit</button>	
+
+					</form>
+					
+       			</div>
+    		</div>
+		</main>	
+		
+
+	</div>
+
+	<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>
